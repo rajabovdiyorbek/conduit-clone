@@ -1,9 +1,17 @@
 <template>
   <div>
-    <h1>Medium clone</h1>
-
+    <mcv-topbar />
     <router-view></router-view>
   </div>
 </template>
 
-<style></style>
+<script>
+import McvTopbar from '@/components/Topbar.vue'
+
+export default {
+  name: 'App',
+  components: {
+    McvTopbar
+  }
+}
+</script>
