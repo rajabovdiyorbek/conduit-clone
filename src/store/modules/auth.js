@@ -54,6 +54,7 @@ const mutations = {
   }
 }
 
+
 const actions = {
 
   [actionTypes.register](context, credentials) {
