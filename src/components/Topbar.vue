@@ -8,7 +8,7 @@
         <li class="nav-item">
           <router-link
             class="nav-link"
-             :to="{name: 'home'}"
+            :to="{name: 'home'}"
             active-class="active"
             exact
             >Home</router-link
@@ -18,7 +18,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-               :to="{name: 'createArticle'}"
+              :to="{name: 'createArticle'}"
               active-class="active"
             >
               <i class="ion-compose" />
@@ -36,7 +36,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-               :to="{name: 'userProfile', params: {slug: currentUser.username}}"
+              :to="{name: 'userProfile', params: {slug: currentUser.username}}"
               active-class="active"
             >
               <img class="user-pic" :src="currentUser.image" />
@@ -45,11 +45,11 @@
             </router-link>
           </li>
         </template>
-        <template v-if="!isLoggedIn">
+        <template v-if="isAnonymous">
           <li class="nav-item">
             <router-link
               class="nav-link"
-               :to="{name: 'login'}"
+              :to="{name: 'login'}"
               active-class="active"
             >
               Sign in
@@ -71,15 +71,30 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+// import {mapState} from 'vuex'
+import {getterTypes} from '@/store/modules/auth'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'McvTopbar',
   computed: {
-    ...mapState({
-      isLoggedIn: state => state.auth.isLoggedIn,
-      currentUser: state => state.auth.currentUser
+    // ...mapState({
+    //   //   isLoggedIn: state => state.auth.isLoggedIn
+    //   //   currentUser: state => state.auth.currentUser
+    // }),
+    ...mapGetters({
+      currentUser: getterTypes.currentUser,
+      isLoggedIn: getterTypes.isLoggedIn,
+      isAnonymous: getterTypes.isAnonymous
     })
+
+    //How we use without **mapGetters**
+    // currentUser() {
+    //   return this.$store.getters.currentUser
+    // },
+    // isLoggedIn() {
+    //   return this.$store.getters.isLoggedIn
+    // }
   }
 }
 </script>
