@@ -8,7 +8,7 @@
         <li class="nav-item">
           <router-link
             class="nav-link"
-            :to="{name: 'home'}"
+             :to="{name: 'home'}"
             active-class="active"
             exact
             >Home</router-link
@@ -18,7 +18,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="{name: 'createArticle'}"
+               :to="{name: 'createArticle'}"
               active-class="active"
             >
               <i class="ion-compose" />
@@ -36,7 +36,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="{name: 'userProfile', params: {slug: currentUser.username}}"
+               :to="{name: 'userProfile', params: {slug: currentUser.username}}"
               active-class="active"
             >
               <img class="user-pic" :src="currentUser.image" />
@@ -49,7 +49,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="{name: 'login'}"
+               :to="{name: 'login'}"
               active-class="active"
             >
               Sign in
