@@ -80,7 +80,7 @@ export default {
           password: this.password
         })
         .then(() => {
-          this.$router.push({name: 'home'})
+          this.$router.push({name: 'globalFeed'})
         })
     }
     /* increaseCounter() { */
