@@ -15,7 +15,6 @@ export default {
     McvTopbar
   },
   mounted() {
-    console.log('hello')
     this.$store.dispatch(actionTypes.getCurrentUser)
   }
 }
