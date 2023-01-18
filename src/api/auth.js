@@ -12,9 +12,8 @@ const getCurrentUser = () => {
   return axios.get('/user')
 }
 
-
 export default {
   register,
   login,
-  getCurrentUser,
+  getCurrentUser
 }

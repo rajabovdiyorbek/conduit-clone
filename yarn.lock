@@ -3038,6 +3038,11 @@
   "resolved" "https://registry.npm.taobao.org/decode-uri-component/download/decode-uri-component-0.2.0.tgz"
   "version" "0.2.0"
 
+"decode-uri-component@^0.4.1":
+  "integrity" "sha512-+8VxcR21HhTy8nOt6jf20w0c9CADrw1O8d+VZ/YzzCt4bJ3uBjw+D1q2osAB8RnpwwaeYBxy0HyKQxD5JBMuuQ=="
+  "resolved" "https://registry.npmjs.org/decode-uri-component/-/decode-uri-component-0.4.1.tgz"
+  "version" "0.4.1"
+
 "deep-equal@^1.0.1":
   "integrity" "sha1-tcmMlCzv+vfLBR4k4UNKJaLmB2o= sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g=="
   "resolved" "https://registry.npm.taobao.org/deep-equal/download/deep-equal-1.1.1.tgz?cache=0&sync_timestamp=1590392818321&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdeep-equal%2Fdownload%2Fdeep-equal-1.1.1.tgz"
@@ -3469,9 +3474,20 @@
   "resolved" "https://registry.npm.taobao.org/escape-string-regexp/download/escape-string-regexp-1.0.5.tgz"
   "version" "1.0.5"
 
+"eslint-loader@^2.1.2":
+  "integrity" "sha512-rA9XiXEOilLYPOIInvVH5S/hYfyTPyxag6DZhoQOduM+3TkghAEQ3VcFO8VnX4J4qg/UIBzp72aOf/xvYmpmsg=="
+  "resolved" "https://registry.npmjs.org/eslint-loader/-/eslint-loader-2.1.2.tgz"
+  "version" "2.1.2"
+  dependencies:
+    "loader-fs-cache" "^1.0.0"
+    "loader-utils" "^1.0.2"
+    "object-assign" "^4.0.1"
+    "object-hash" "^1.1.4"
+    "rimraf" "^2.6.1"
+
 "eslint-loader@^2.2.1":
-  "integrity" "sha1-KLnBLaVAV68IReKmEScBova/gzc= sha512-RLgV9hoCVsMLvOxCuNjdqOrUqIj9oJg8hF44vzJaYqsAHuY9G2YAeN3joQ9nxP0p5Th9iFSIpKo+SD8KISxXRg=="
-  "resolved" "https://registry.npm.taobao.org/eslint-loader/download/eslint-loader-2.2.1.tgz"
+  "integrity" "sha512-RLgV9hoCVsMLvOxCuNjdqOrUqIj9oJg8hF44vzJaYqsAHuY9G2YAeN3joQ9nxP0p5Th9iFSIpKo+SD8KISxXRg=="
+  "resolved" "https://registry.npmjs.org/eslint-loader/-/eslint-loader-2.2.1.tgz"
   "version" "2.2.1"
   dependencies:
     "loader-fs-cache" "^1.0.0"
@@ -3876,6 +3892,11 @@
   "version" "7.0.1"
   dependencies:
     "to-regex-range" "^5.0.1"
+
+"filter-obj@^5.1.0":
+  "integrity" "sha512-qWeTREPoT7I0bifpPUXtxkZJ1XJzxWtfoWWkdVGqa+eCr3SHW/Ocp89o8vLvbUuQnadybJpjOKu4V+RwO6sGng=="
+  "resolved" "https://registry.npmjs.org/filter-obj/-/filter-obj-5.1.0.tgz"
+  "version" "5.1.0"
 
 "finalhandler@~1.1.2":
   "integrity" "sha1-t+fQAP/RGTjQ/bBTUG9uur6fWH0= sha512-aAWcW57uxVNrQZqFXjITpW3sIUQmHGG3qSb9mUah9MgMC4NeWhNOlNjXEYq3HjRAvL6arUviZGGJsBg6z0zsWA=="
@@ -6715,12 +6736,21 @@
   "version" "6.7.0"
 
 "query-string@^4.1.0":
-  "integrity" "sha1-u7aTucqRXCMlFbIosaArYJBD2+s= sha512-O2XLNDBIg1DnTOa+2XrIwSiXEV8h2KImXUnjhhn2+UsvZ+Es2uyd5CCRTNQlDGbzUQOW3aYCBx9rVA6dzsiY7Q=="
-  "resolved" "https://registry.npm.taobao.org/query-string/download/query-string-4.3.4.tgz?cache=0&sync_timestamp=1600011270240&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fquery-string%2Fdownload%2Fquery-string-4.3.4.tgz"
+  "integrity" "sha512-O2XLNDBIg1DnTOa+2XrIwSiXEV8h2KImXUnjhhn2+UsvZ+Es2uyd5CCRTNQlDGbzUQOW3aYCBx9rVA6dzsiY7Q=="
+  "resolved" "https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz"
   "version" "4.3.4"
   dependencies:
     "object-assign" "^4.1.0"
     "strict-uri-encode" "^1.0.0"
+
+"query-string@^8.1.0":
+  "integrity" "sha512-BFQeWxJOZxZGix7y+SByG3F36dA0AbTy9o6pSmKFcFz7DAj0re9Frkty3saBn3nHo3D0oZJ/+rx3r8H8r8Jbpw=="
+  "resolved" "https://registry.npmjs.org/query-string/-/query-string-8.1.0.tgz"
+  "version" "8.1.0"
+  dependencies:
+    "decode-uri-component" "^0.4.1"
+    "filter-obj" "^5.1.0"
+    "split-on-first" "^3.0.0"
 
 "querystring-es3@^0.2.0":
   "integrity" "sha1-nsYfeQSYdXB9aUFFlv2Qek1xHnM= sha512-773xhDQnZBMFobEiztv8LIl70ch5MSF/jUQVlhwFyBILqq96anmoctVIYz+ZRp0qbCKATTn6ev02M3r7Ga5vqA=="
@@ -7480,6 +7510,11 @@
     "select-hose" "^2.0.0"
     "spdy-transport" "^3.0.0"
 
+"split-on-first@^3.0.0":
+  "integrity" "sha512-qxQJTx2ryR0Dw0ITYyekNQWpz6f8dGd7vffGNflQQ3Iqj9NJ6qiZ7ELpZsJ/QBhIVAiDfXdag3+Gp8RvWa62AA=="
+  "resolved" "https://registry.npmjs.org/split-on-first/-/split-on-first-3.0.0.tgz"
+  "version" "3.0.0"
+
 "split-string@^3.0.1", "split-string@^3.0.2":
   "integrity" "sha1-fLCd2jqGWFcFxks5pkZgOGguj+I= sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw=="
   "resolved" "https://registry.npm.taobao.org/split-string/download/split-string-3.1.0.tgz"
@@ -7578,8 +7613,8 @@
   "version" "1.0.1"
 
 "strict-uri-encode@^1.0.0":
-  "integrity" "sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM= sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ=="
-  "resolved" "https://registry.npm.taobao.org/strict-uri-encode/download/strict-uri-encode-1.1.0.tgz"
+  "integrity" "sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ=="
+  "resolved" "https://registry.npmjs.org/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz"
   "version" "1.1.0"
 
 "string_decoder@^1.0.0", "string_decoder@^1.1.1", "string_decoder@~1.1.1":

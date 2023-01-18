@@ -76,7 +76,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log('onSubmit')
       this.$store
         .dispatch(actionTypes.register, {
           email: this.email,
@@ -84,13 +83,9 @@ export default {
           password: this.password
         })
         .then(() => {
-          this.$router.push({name: 'home'})
+          this.$router.push({name: 'globalFeed'})
         })
     }
-    /* increaseCounter() { */
-    /*   console.log('increaseCounter') */
-    /*   this.$store.commit('increment') */
-    /* } */
   }
 }
 </script>

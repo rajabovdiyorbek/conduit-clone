@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import GlobalFeed from '@/views/GlobalFeed.vue'
 import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
-import GlobalFeed from '@/views/GlobalFeed'
 
 Vue.use(VueRouter)
+
 const routes = [
   {
     path: '/register',

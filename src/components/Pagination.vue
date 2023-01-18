@@ -1,5 +1,5 @@
 <template>
-  <ul class="paginatoin">
+  <ul class="pagination">
     <li
       v-for="page in pages"
       :key="page"
@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import {range} from '@/utils/range.js'
-
+import {range} from '@/helpers/utils'
 export default {
   name: 'McvPagination',
   props: {
@@ -45,4 +44,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>

@@ -34,7 +34,7 @@
               class="btn btn-lg btn-primary pull-xs-right"
               :disabled="isSubmitting"
             >
-              Sign in
+              Sign In
             </button>
           </form>
         </div>
@@ -48,6 +48,7 @@ import {mapState} from 'vuex'
 
 import McvValidationErrors from '@/components/ValidationErrors.vue'
 import {actionTypes} from '@/store/modules/auth'
+
 export default {
   name: 'McvLogin',
   components: {
@@ -64,13 +65,6 @@ export default {
       isSubmitting: state => state.auth.isSubmitting,
       validationErrors: state => state.auth.validationErrors
     })
-
-    // isSubmitting() {
-    //   return this.$store.state.auth.isSubmitting
-    // },
-    // validationErrors() {
-    //   return this.$store.state.auth.validationErrors
-    // }
   },
   methods: {
     onSubmit() {
@@ -83,10 +77,6 @@ export default {
           this.$router.push({name: 'globalFeed'})
         })
     }
-    /* increaseCounter() { */
-    /*   console.log('increaseCounter') */
-    /*   this.$store.commit('increment') */
-    /* } */
   }
 }
 </script>

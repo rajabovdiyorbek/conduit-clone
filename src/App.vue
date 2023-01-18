@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <mcv-topbar />
     <router-view></router-view>
   </div>
@@ -19,3 +19,4 @@ export default {
   }
 }
 </script>
+
