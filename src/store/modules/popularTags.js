@@ -2,7 +2,7 @@ import popularTagsApi from '@/api/popularTags'
 
 const state = {
   data: null,
-  isLoading: true,
+  isLoading: false,
   error: null
 }
 
