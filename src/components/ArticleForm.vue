@@ -59,7 +59,7 @@ import McvValidationErrors from '@/components/ValidationErrors'
 export default {
     name: 'McvArticleForm',
     components: {
-        McvValidationErrors
+        McvValidationErrors 
     },
     props: {
         initialValues: {
