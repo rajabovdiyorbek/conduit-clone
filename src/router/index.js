@@ -9,7 +9,6 @@ import Login from '@/views/Login.vue'
 import Article from '@/views/Article.vue'
 import CreateArticle from '@/views/CreateArticle.vue'
 
-
 Vue.use(VueRouter)
 
 const routes = [
