@@ -28,7 +28,10 @@
               <i class="ion-edit" />
               Edit Article
             </router-link>
-            <button class="btn btn-outline-danger btn-sm" @click="deleteArticle">
+            <button
+              class="btn btn-outline-danger btn-sm"
+              @click="deleteArticle"
+            >
               <i class="ion-trash-a" />
               Delete Article
             </button>
@@ -44,7 +47,7 @@
           <div>
             <p>{{ article.body }}</p>
           </div>
-          <mcv-tag-list :tags='article.tagList'/>
+          <mcv-tag-list :tags="article.tagList" />
         </div>
       </div>
     </div>
@@ -76,10 +79,11 @@ export default {
     ...mapGetters({
       currentUser: authGetterTypes.currentUser
     }),
-    isAuthor(){
-      if(!this.currentUser || !this.article){
+    isAuthor() {
+      if (!this.currentUser || !this.article) {
         return false
       }
+
       return this.currentUser.username === this.article.author.username
     }
   },
@@ -89,13 +93,14 @@ export default {
     })
   },
   methods: {
-    deleteArticle(){
-      this.$store.dispatch(articleActionTypes.deleteArticle, {
-        slug: this.$route.params.slug
-      })
-      .then(()=> {
-        this.$router.push({name: 'globalFeed'})
-      })
+    deleteArticle() {
+      this.$store
+        .dispatch(articleActionTypes.deleteArticle, {
+          slug: this.$route.params.slug
+        })
+        .then(() => {
+          this.$router.push({name: 'globalFeed'})
+        })
     }
   }
 }
