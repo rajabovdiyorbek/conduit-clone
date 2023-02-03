@@ -9,6 +9,7 @@ import Login from '@/views/Login.vue'
 import Article from '@/views/Article.vue'
 import CreateArticle from '@/views/CreateArticle.vue'
 import EditArticle from '@/views/EditArticle.vue'
+import Settings from '@/views/Settings.vue'
 
 Vue.use(VueRouter)
 
@@ -56,7 +57,7 @@ const routes = [
   {
     path: '/settings',
     name: 'settings',
-    component: GlobalFeed
+    component: Settings
   },
   {
     path: '/profiles/:slug',
