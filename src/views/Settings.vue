@@ -94,11 +94,21 @@ export default {
       currentUser: authGetterTypes.currentUser
     }),
     form() {
+      if (this.currentUser) {
+        return {
+          username: this.currentUser.username,
+          bio: this.currentUser.bio,
+          image: this.currentUser.image,
+          email: this.currentUser.email,
+          password: ''
+        }
+      }
+
       return {
-        username: this.currentUser.username,
-        bio: this.currentUser.bio,
-        image: this.currentUser.image,
-        email: this.currentUser.email,
+        username: '',
+        bio: '',
+        image: '',
+        email: '',
         password: ''
       }
     }
