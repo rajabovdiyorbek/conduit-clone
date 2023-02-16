@@ -1,186 +1,196 @@
-import authApi from '@/api/auth'
-import {setItem} from '@/helpers/persistanceStorage'
+// todo: Импортируем наш апи запрос
+import authApi from '@/api/auth.js'
+import { setItem } from '@/helpers/persistanceStorage.js'
 
 const state = {
   isSubmitting: false,
-  isLoggedIn: null,
   isLoading: false,
   currentUser: null,
-  validationErrors: null
+  validationErrors: null,
+  isLoggedIn: null,
 }
-
-export const mutationTypes = {
-  registerStart: '[auth] Register start',
-  registerSuccess: '[auth] Register success',
-  registerFailure: '[auth] Register failure',
-
-  loginStart: '[auth] Login start',
-  loginSuccess: '[auth] Login success',
-  loginFailure: '[auth] Login failure',
-
-  getCurrentUserStart: '[auth] Get current user start',
-  getCurrentUserSuccess: '[auth] Get current user success',
-  getCurrentUserFailure: '[auth] Get current user failure',
-
-  updateCurrentUserStart: '[auth] Update current user start',
-  updateCurrentUserSuccess: '[auth] Update current user success',
-  updateCurrentUserFailure: '[auth] Update current user failure',
-
+//* actions
+export const actionsTypes = {
+  register: '[auth] register',
+  signIn: '[auth] signIn',
+  getCurrentUser: '[auth] getCurrentUser',
+  updateCurrentUser: '[auth] updateCurrentUser',
   logout: '[auth] logout'
 }
 
-export const actionTypes = {
-  register: '[auth] Register',
-  login: '[auth] Login',
-  getCurrentUser: '[auth] Get current user',
-  updateCurrentUser: '[auth] Update current user',
-  logout: '[auth] logout'
+export const mutationsTypes = {
+  registerStart: '[auth] register Start',
+  registerSuccess: '[auth] register Success',
+  registerFailure: '[auth] register Failure',
+
+  signInStart: '[auth] sign In Start',
+  signInSuccess: '[auth] sign In Success',
+  signInFailure: '[auth] sign In Failure',
+
+  getCurrentUserStart: '[auth] get Current User Start',
+  getCurrentUserSuccess: '[auth] get Current User Success',
+  getCurrentUserFailure: '[auth] get CurrentUser Failure',
+
+  updateCurrentUserStart: '[auth] update UserStart',
+  updateCurrentUserSuccess: '[auth] update UserSuccess',
+  updateCurrentUserFailure: '[auth] update UserFailure',
+
+  logout: '[outh] logout'
 }
 
-export const getterTypes = {
+export const gettersTypes = {
   currentUser: '[auth] currentUser',
   isLoggedIn: '[auth] isLoggedIn',
-  isAnonymous: '[auth] isAnonymous'
+  isAnonymous: '[auth] isAnonymous',
+  updateCurrentUser: '[auth] updateCurrentUser',
 }
 
 const getters = {
-  [getterTypes.currentUser]: state => {
+  [gettersTypes.currentUser]: state => {
     return state.currentUser
   },
-  [getterTypes.isLoggedIn]: state => {
+  [gettersTypes.isLoggedIn]: state => {
     return Boolean(state.isLoggedIn)
   },
-  [getterTypes.isAnonymous]: state => {
+  [gettersTypes.isAnonymous]: state => {
     return state.isLoggedIn === false
-  }
+  },
 }
 
+//* мутации регистрации
 const mutations = {
-  [mutationTypes.registerStart](state) {
+  [mutationsTypes.registerStart](state) {
     state.isSubmitting = true
     state.validationErrors = null
   },
-  [mutationTypes.registerSuccess](state, payload) {
+  [mutationsTypes.registerSuccess](state, payload) {
     state.isSubmitting = false
-    state.isLoggedIn = true
     state.currentUser = payload
+    state.isLoggedIn = true
   },
-  [mutationTypes.registerFailure](state, payload) {
+  [mutationsTypes.registerFailure](state, payload) {
     state.isSubmitting = false
     state.validationErrors = payload
   },
-  [mutationTypes.loginStart](state) {
+  //* мутации входа
+  [mutationsTypes.signInStart](state) {
     state.isSubmitting = true
     state.validationErrors = null
   },
-  [mutationTypes.loginSuccess](state, payload) {
+  [mutationsTypes.signInSuccess](state, payload) {
     state.isSubmitting = false
-    state.isLoggedIn = true
     state.currentUser = payload
+    state.isLoggedIn = true
   },
-  [mutationTypes.loginFailure](state, payload) {
+  [mutationsTypes.signInFailure](state, payload) {
     state.isSubmitting = false
     state.validationErrors = payload
   },
-  [mutationTypes.getCurrentUserStart](state) {
+  //* мутации получения пользовавтеля
+  [mutationsTypes.getCurrentUserStart](state) {
     state.isLoading = true
   },
-  [mutationTypes.getCurrentUserSuccess](state, payload) {
+  [mutationsTypes.getCurrentUserSuccess](state, payload) {
     state.isLoading = false
-    state.isLoggedIn = true
     state.currentUser = payload
+    state.isLoggedIn = true
   },
-  [mutationTypes.getCurrentUserFailure](state) {
+  [mutationsTypes.getCurrentUserFailure](state) {
     state.isLoading = false
     state.isLoggedIn = false
     state.currentUser = null
   },
-  [mutationTypes.updateCurrentUserStart]() {},
-  [mutationTypes.updateCurrentUserSuccess](state, payload) {
+  //* мутации изменения юезера  пользовавтеля
+  [mutationsTypes.updateCurrentUserStart]() {},
+  [mutationsTypes.updateCurrentUserSuccess](state, payload) {
     state.currentUser = payload
   },
-  [mutationTypes.updateCurrentUserFailure]() {},
-  [mutationTypes.logout]() {
+  [mutationsTypes.updateCurrentUserFailure]() {},
+
+  [mutationsTypes.logout](state){
     state.currentUser = null
     state.isLoggedIn = false
   }
 }
 
 const actions = {
-  [actionTypes.register](context, credentials) {
+  [actionsTypes.register]({ commit }, objCredentials) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.registerStart)
+      commit(mutationsTypes.registerStart) //  инициализируем мутацию registerStart
       authApi
-        .register(credentials)
+        .register(objCredentials) // register наш апи метод который создан для auth
         .then(response => {
-          context.commit(mutationTypes.registerSuccess, response.data.user)
-          setItem('accessToken', response.data.user.token)
+          // then срабатывает в случае удачной отправки запроса на сервер и выполняет
+          commit(mutationsTypes.registerSuccess, response.data.user) // комит запускает мутицию (имя мутации, пейлоад), response.data.user есть наш юзер что возвращается
+          setItem('accessToken', response.data.user.token) // сетим наш токин
           resolve(response.data.user)
         })
+
         .catch(result => {
-          context.commit(
-            mutationTypes.registerFailure,
-            result.response.data.errors
+          // catch срабатывает в случае не удачной отправки запроса на сервер и выполняет
+          commit(mutationsTypes.registerFailure, result.response.data.errors)
+          console.log(
+            'Код состояния ответа HTTP 422 Unprocessable Entity указывает, что сервер понимает тип содержимого в теле запроса и синтаксис запроса является правильным, но серверу не удалось обработать инструкции содержимого.',
           )
         })
     })
   },
-  [actionTypes.login](context, credentials) {
+
+  [actionsTypes.signIn]({ commit }, objCredentials) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.loginStart)
+      commit(mutationsTypes.signInStart)
       authApi
-        .login(credentials)
+        .signIn(objCredentials)
         .then(response => {
-          context.commit(mutationTypes.loginSuccess, response.data.user)
+          commit(mutationsTypes.signInSuccess, response.data.user)
           setItem('accessToken', response.data.user.token)
           resolve(response.data.user)
         })
         .catch(result => {
-          context.commit(
-            mutationTypes.loginFailure,
-            result.response.data.errors
-          )
+          commit(mutationsTypes.signInFailure, result.response.data.errors)
+          console.log('ошибка логина ', result)
         })
     })
   },
-  [actionTypes.getCurrentUser](context) {
+  [actionsTypes.getCurrentUser]({ commit }) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.getCurrentUserStart)
+      commit(mutationsTypes.getCurrentUserStart)
       authApi
         .getCurrentUser()
         .then(response => {
-          context.commit(
-            mutationTypes.getCurrentUserSuccess,
-            response.data.user
-          )
+          commit(mutationsTypes.getCurrentUserSuccess, response.data.user)
+          setItem('accessToken', response.data.user.token)
           resolve(response.data.user)
         })
         .catch(() => {
-          context.commit(mutationTypes.getCurrentUserFailure)
+          commit(mutationsTypes.getCurrentUserFailure)
+          console.log('ошибка логина getCurrentUser')
         })
     })
   },
-  [actionTypes.updateCurrentUser](context, {currentUserInput}) {
+  [actionsTypes.updateCurrentUser]({ commit }, { currentUserInput }) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.updateCurrentUserStart)
+      commit(mutationsTypes.updateCurrentUserStart)
       authApi
         .updateCurrentUser(currentUserInput)
         .then(user => {
-          context.commit(mutationTypes.updateCurrentUserSuccess, user)
+          commit(mutationsTypes.updateCurrentUserSuccess, user)
           resolve(user)
         })
         .catch(result => {
-          context.commit(
-            mutationTypes.updateCurrentUserFailure,
-            result.response.data.errors
+          commit(
+            mutationsTypes.updateCurrentUserFailure,
+            result.response.data.errors,
           )
+          console.log('ошибка логина updateCurrentUserFailure')
+          console.log(result.response.data.errors)
         })
     })
   },
-  [actionTypes.logout](context) {
+  [actionsTypes.logout]({commit}){
     return new Promise(resolve => {
-      setItem('accessToken', '')
-      context.commit(mutationTypes.logout)
+      setItem('accessTocken', '')
+      commit(mutationsTypes.logout)
       resolve()
     })
   }
@@ -188,7 +198,7 @@ const actions = {
 
 export default {
   state,
-  actions,
+  getters,
   mutations,
-  getters
+  actions,
 }

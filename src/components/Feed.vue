@@ -1,7 +1,7 @@
 <template>
   <div>
-    <mcv-loading v-if="isLoading" />
-    <mcv-error-message v-if="error" />
+    <mcv-loading v-if="isLoading"></mcv-loading>
+    <mcv-error-message v-if="error"></mcv-error-message>
 
     <div v-if="feed">
       <div
@@ -11,7 +11,10 @@
       >
         <div class="article-meta">
           <router-link
-            :to="{name: 'userProfile', params: {slug: article.author.username}}"
+            :to="{
+              name: 'userProfile',
+              params: { slug: article.author.username },
+            }"
           >
             <img :src="article.author.image" />
           </router-link>
@@ -19,7 +22,7 @@
             <router-link
               :to="{
                 name: 'userProfile',
-                params: {slug: article.author.username}
+                params: { slug: article.author.username },
               }"
             >
               {{ article.author.username }}
@@ -31,80 +34,86 @@
               :is-favorited="article.favorited"
               :article-slug="article.slug"
               :favorites-count="article.favoritesCount"
-            ></mcv-add-to-favorites>
+            >
+            </mcv-add-to-favorites>
           </div>
         </div>
         <router-link
-          :to="{name: 'article', params: {slug: article.slug}}"
+          :to="{ name: 'article', params: { slug: article.slug } }"
           class="preview-link"
         >
           <h1>{{ article.title }}</h1>
           <p>{{ article.description }}</p>
-          <span>Read more...</span>
-          <mcv-tag-list :tags="article.tagList" />
+          <span>Читать больше...</span>
+          <mcv-tag-list :tags="article.tagList"></mcv-tag-list>
         </router-link>
       </div>
       <mcv-pagination
         :total="feed.articlesCount"
         :limit="limit"
-        :url="baseUrl"
         :current-page="currentPage"
+        :url="baseUrl"
       ></mcv-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {stringify, parseUrl} from 'query-string'
-
-import {actionTypes} from '@/store/modules/feed'
 import McvPagination from '@/components/Pagination'
-import {limit} from '@/helpers/vars'
-import McvLoading from '@/components/Loading'
-import McvErrorMessage from '@/components/ErrorMessage'
-import McvTagList from '@/components/TagList'
-import McvAddToFavorites from '@/components/AddToFavorites'
+import McvLoading from '@/components/Loading.vue'
+import McvErrorMessage from '@/components/ErrorMessage.vue'
+import McvTagList from '@/components/TagList.vue'
+import McvAddToFavorites from '@/components/AddToFavorites.vue'
+
+import { mapState } from 'vuex'
+import { actionsTypes } from '@/store/modules/feed'
+
+import { limit } from '@/helpers/vars'
+import { stringify, parseUrl } from 'query-string'
 
 export default {
   name: 'McvFeed',
+  data() {
+    return {
+      total: 500,
+      limit,
+      url: '/',
+    }
+  },
   components: {
     McvPagination,
     McvLoading,
     McvErrorMessage,
     McvTagList,
-    McvAddToFavorites
+    McvAddToFavorites,
   },
   props: {
     apiUrl: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     ...mapState({
-      isLoading: state => state.feed.isLoading,
-      feed: state => state.feed.data,
-      error: state => state.feed.error
+      isLoading: (state) => state.feed.isLoading,
+      feed: (state) => state.feed.data,
+      error: (state) => state.feed.error,
     }),
-    limit() {
-      return limit
+    currentPage() {
+      return Number(this.$route.query.page || '1')
     },
     baseUrl() {
       return this.$route.path
     },
-    currentPage() {
-      return Number(this.$route.query.page || '1')
-    },
     offset() {
       return this.currentPage * limit - limit
-    }
+    },
   },
   watch: {
     currentPage() {
       this.fetchFeed()
     },
-    apiUrl() {
+    apiUrl(){
       this.fetchFeed()
     }
   },
@@ -114,14 +123,17 @@ export default {
   methods: {
     fetchFeed() {
       const parsedUrl = parseUrl(this.apiUrl)
-      const stringifiedParams = stringify({
+      const stringifyparams = stringify({
         limit,
         offset: this.offset,
-        ...parsedUrl.query
+        ...parsedUrl.query,
       })
-      const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`
-      this.$store.dispatch(actionTypes.getFeed, {apiUrl: apiUrlWithParams})
-    }
-  }
+      const apiUrlWithParams = `${parsedUrl.url}?${stringifyparams}`
+      this.$store.dispatch(actionsTypes.getFeed, { apiUrl: apiUrlWithParams })
+    },
+  },
 }
 </script>
+
+<style lang="scss">
+</style>

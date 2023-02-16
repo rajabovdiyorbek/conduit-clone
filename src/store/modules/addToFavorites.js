@@ -1,41 +1,46 @@
 import addToFavoritesApi from '@/api/addToFavorites'
+// import { mutationsTypes } from './article'
+// import { mutationsTypes } from "./article"
 
-export const actionTypes = {
-  addToFavorites: '[addToFavorites] Add to favorites'
-}
-
-export const mutationTypes = {
-  addToFavoritesStart: '[addToFavorites] Add to favorites start',
-  addToFavoritesSuccess: '[addToFavorites] Add to favorites success',
-  addToFavoritesFailure: '[addToFavorites] Add to favorites failure'
+export const mutationsTypes = {
+  addToFavoritesStart: '[addToFavorites] add To Favorites Start',
+  addToFavoritesSuccess: '[addToFavorites] add To Favorites Success',
+  addToFavoritesFailure: '[addToFavorites] add To Favorites Failure',
 }
 
 const mutations = {
-  [mutationTypes.addToFavoritesStart]() {},
-  [mutationTypes.addToFavoritesSuccess]() {},
-  [mutationTypes.addToFavoritesFailure]() {}
+  [mutationsTypes.addToFavoritesStart]() {},
+  [mutationsTypes.addToFavoritesSuccess]() {},
+  [mutationsTypes.addToFavoritesFailure]() {},
+}
+
+export const actionsTypes = {
+  addToFavorites: '[addToFavorites] add To Favorites',
 }
 
 const actions = {
-  [actionTypes.addToFavorites](context, {slug, isFavorited}) {
+  [actionsTypes.addToFavorites]({ commit }, { slug, isFavorited }) {
+    console.log(mutationsTypes);
     return new Promise(resolve => {
-      context.commit(mutationTypes.addToFavoritesStart)
+      commit(mutationsTypes.addToFavoritesStart)
+
       const promise = isFavorited
-        ? addToFavoritesApi.removeFromFavorites(slug)
+        ? addToFavoritesApi.removeToFavorites(slug)
         : addToFavoritesApi.addToFavorites(slug)
+
       promise
         .then(article => {
-          context.commit(mutationTypes.addToFavoritesSuccess, article)
+          commit(mutationsTypes.addToFavoritesSuccess, article)
           resolve(article)
         })
         .catch(() => {
-          context.commit(mutationTypes.addToFavoritesFailure())
+          commit(mutationsTypes.addToFavoritesFailure)
         })
     })
-  }
+  },
 }
 
 export default {
+  mutations,
   actions,
-  mutations
 }

@@ -12,7 +12,7 @@
               <router-link
                 v-if="isCurrentUserProfile"
                 class="btn btn-sm btn-outline-secondary action-btn"
-                :to="{name: 'settings'}"
+                :to="{ name: 'settings' }"
               >
                 Edit Profile Settings
               </router-link>
@@ -30,10 +30,10 @@
                 <router-link
                   :to="{
                     name: 'userProfile',
-                    params: {slug: userProfile.username}
+                    params: { slug: userProfile.username },
                   }"
                   class="nav-link"
-                  :class="{active: routeName === 'userProfile'}"
+                  :class="{ active: routeName === 'userProfile' }"
                 >
                   My Posts
                 </router-link>
@@ -42,10 +42,10 @@
                 <router-link
                   :to="{
                     name: 'userProfileFavorites',
-                    params: {slug: userProfile.username}
+                    params: { slug: userProfile.username },
                   }"
                   class="nav-link"
-                  :class="{active: routeName === 'userProfileFavorites'}"
+                  :class="{ active: routeName === 'userProfileFavorites' }"
                 >
                   Favorites Posts
                 </router-link>
@@ -60,36 +60,36 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex'
+import McvFeed from '@/components/Feed.vue'
 
-import {actionTypes as userProfileActionTypes} from '@/store/modules/userProfile'
-import {getterTypes as authGetterTypes} from '@/store/modules/auth'
-import McvFeed from '@/components/Feed'
+import { mapState, mapGetters } from 'vuex'
+import { actionsTypes as userProfileActionTypes } from '@/store/modules/userProfile'
+import { gettersTypes as authGettersTypes } from '@/store/modules/auth'
 
 export default {
   name: 'McvUserProfile',
   components: {
-    McvFeed
+    McvFeed,
   },
   computed: {
     ...mapState({
-      isLoading: state => state.userProfile.isLoading,
-      userProfile: state => state.userProfile.data,
-      error: state => state.userProfile.error
+      isLoading: (state) => state.userProfile.isLoading,
+      userProfile: (state) => state.userProfile.data,
+      error: (state) => state.userProfile.error,
     }),
     ...mapGetters({
-      currentUser: authGetterTypes.currentUser
+      currentUser: authGettersTypes.currentUser,
     }),
     isCurrentUserProfile() {
       if (!this.currentUser || !this.userProfile) {
         return false
       }
-
       return this.currentUser.username === this.userProfile.username
     },
     userProfileSlug() {
       return this.$route.params.slug
     },
+
     apiUrl() {
       const isFavorites = this.$route.path.includes('favorites')
       return isFavorites
@@ -98,10 +98,10 @@ export default {
     },
     routeName() {
       return this.$route.name
-    }
+    },
   },
   watch: {
-    userProfileSlug() {
+    userProfileSlug(){
       this.getUserProfile()
     }
   },
@@ -111,9 +111,9 @@ export default {
   methods: {
     getUserProfile() {
       this.$store.dispatch(userProfileActionTypes.getUserProfile, {
-        slug: this.userProfileSlug
+        slug: this.userProfileSlug,
       })
     }
-  }
+  },
 }
 </script>

@@ -26,6 +26,6 @@ export default new Vuex.Store({
     editArticle,
     settings,
     addToFavorites,
-    userProfile
-  }
+    userProfile,
+  },
 })

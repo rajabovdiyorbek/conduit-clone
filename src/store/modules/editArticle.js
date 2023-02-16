@@ -4,83 +4,87 @@ const state = {
   isSubmitting: false,
   validationErrors: null,
   isLoading: false,
-  article: null
+  article: null,
 }
 
-export const mutationTypes = {
-  updateArticleStart: '[editArticle] Update article start',
-  updateArticleSuccess: '[editArticle] Update article success',
-  updateArticleFailure: '[editArticle] Update article failure',
+export const mutationsTypes = {
+  updateArticleStart: '[updateArticle ] update Article Start',
+  updateArticleSuccess: '[updateArticle] update Article Success',
+  updateArticleFailure: '[updateArticle] update Article Failure',
 
-  getArticleStart: '[editArticle] Get article start',
-  getArticleSuccess: '[editArticle] Get article success',
-  getArticleFailure: '[editArticle] Get article failure'
-}
-
-export const actionTypes = {
-  updateArticle: '[editArticle] Create article',
-  getArticle: '[editArticle] Get article'
+  getArticleStart: '[updateArticle ] get Article Start',
+  getArticleSuccess: '[updateArticle] get Article Success',
+  getArticleFailure: '[updateArticle] get Article Failure',
 }
 
 const mutations = {
-  [mutationTypes.updateArticleStart](state) {
+  [mutationsTypes.updateArticleStart](state) {
     state.isSubmitting = true
   },
-  [mutationTypes.updateArticleSuccess](state) {
+  [mutationsTypes.updateArticleSuccess](state) {
     state.isSubmitting = false
   },
-  [mutationTypes.updateArticleFailure](state, payload) {
+  [mutationsTypes.updateArticleFailure](state, payload) {
     state.isSubmitting = false
     state.validationErrors = payload
   },
-  [mutationTypes.getArticleStart](state) {
+  [mutationsTypes.getArticleStart](state) {
     state.isLoading = true
   },
-  [mutationTypes.getArticleSuccess](state, payload) {
+  [mutationsTypes.getArticleSuccess](state, payload) {
     state.isLoading = false
     state.article = payload
   },
-  [mutationTypes.getArticleFailure](state) {
+  [mutationsTypes.getArticleFailure](state) {
     state.isLoading = false
-  }
+  },
+}
+
+export const actionsTypes = {
+  updateArticle: '[updateArticle] update Article',
+  getArticle: '[updateArticle] update getArticle',
 }
 
 const actions = {
-  [actionTypes.updateArticle](context, {slug, articleInput}) {
+  [actionsTypes.updateArticle]({ commit }, { slug, articleInput }) {
+    console.log('before Promise');
     return new Promise(resolve => {
-      context.commit(mutationTypes.updateArticleStart)
+      console.log('red');
+      commit(mutationsTypes.updateArticleStart)
       articleApi
         .updateArticle(slug, articleInput)
         .then(article => {
-          context.commit(mutationTypes.updateArticleSuccess, article)
+          commit(mutationsTypes.updateArticleSuccess, article)
           resolve(article)
         })
         .catch(result => {
-          context.commit(
-            mutationTypes.updateArticleFailure,
-            result.response.data.errors
+          console.log('errors')
+          commit( 
+            mutationsTypes.updateArticleFailure,
+            result.response.data.errors,
           )
         })
     })
   },
-  [actionTypes.getArticle](context, {slug}) {
+  [actionsTypes.getArticle]({ commit }, { slug }) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.getArticleStart)
+      commit(mutationsTypes.getArticleStart)
       articleApi
         .getArticle(slug)
         .then(article => {
-          context.commit(mutationTypes.getArticleSuccess, article)
+          commit(mutationsTypes.getArticleSuccess, article)
           resolve(article)
         })
         .catch(() => {
-          context.commit(mutationTypes.getArticleFailure)
+          commit(mutationsTypes.getArticleFailure)
+          console.log('getArticleFailure');
         })
     })
-  }
+  },
 }
 
 export default {
   state,
+  mutations,
   actions,
-  mutations
 }

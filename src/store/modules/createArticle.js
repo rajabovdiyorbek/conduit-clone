@@ -2,54 +2,51 @@ import articleApi from '@/api/article'
 
 const state = {
   isSubmitting: false,
-  validationErrors: null
+  validationErrors: null,
 }
 
-export const mutationTypes = {
-  createArticleStart: '[createArticle] Create article start',
-  createArticleSuccess: '[createArticle] Create article success',
-  createArticleFailure: '[createArticle] Create article failure'
+export const mutationsTypes = {
+  createArticleStart: '[createArticle ] create Article Start',
+  createArticleSuccess: '[createArticle] create Article Success',
+  createArticleFailure: '[createArticle] create Article Failure',
 }
 
-export const actionTypes = {
-  createArticle: '[createArticle] Create article'
+export const actionsTypes = {
+  createArticle: '[createArticle] Create Article',
 }
 
 const mutations = {
-  [mutationTypes.createArticleStart](state) {
+  [mutationsTypes.createArticleStart](state) {
     state.isSubmitting = true
   },
-  [mutationTypes.createArticleSuccess](state) {
+  [mutationsTypes.createArticleSuccess](state) {
     state.isSubmitting = false
   },
-  [mutationTypes.createArticleFailure](state, payload) {
+  [mutationsTypes.createArticleFailure](state, payload) {
     state.isSubmitting = false
     state.validationErrors = payload
-  }
+  },
 }
 
 const actions = {
-  [actionTypes.createArticle](context, {articleInput}) {
+  [actionsTypes.createArticle]({ commit }, { articleInput }) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.createArticleStart)
+      commit(mutationsTypes.createArticleStart)
       articleApi
-        .createArticle(articleInput)
-        .then(article => {
-          context.commit(mutationTypes.createArticleSuccess, article)
-          resolve(article)
-        })
-        .catch(result => {
-          context.commit(
-            mutationTypes.createArticleFailure,
-            result.response.data.errors
-          )
-        })
+      .createArticle(articleInput)
+      .then(article => {
+        commit(mutationsTypes.createArticleSuccess, article)
+        resolve(article)
+      }).catch(result => {
+        console.log(result.response.data.errors);
+        commit(mutationsTypes.createArticleFailure, result.response.data.errors)
+      })
     })
-  }
+  },
 }
 
 export default {
   state,
+  mutations,
   actions,
-  mutations
 }

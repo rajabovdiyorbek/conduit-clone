@@ -1,79 +1,78 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
 import GlobalFeed from '@/views/GlobalFeed.vue'
 import YourFeed from '@/views/YourFeed.vue'
 import TagFeed from '@/views/TagFeed.vue'
 import Register from '@/views/Register.vue'
-import Login from '@/views/Login.vue'
+import SignIn from '@/views/SignIn.vue'
 import Article from '@/views/Article.vue'
 import CreateArticle from '@/views/CreateArticle.vue'
 import EditArticle from '@/views/EditArticle.vue'
 import Settings from '@/views/Settings.vue'
 import UserProfile from '@/views/UserProfile.vue'
-
+ 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/register',
     name: 'register',
-    component: Register
+    component: Register,
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
+    path: '/signIn',
+    name: 'signIn',
+    component: SignIn,
   },
   {
     path: '/',
     name: 'globalFeed',
-    component: GlobalFeed
+    component: GlobalFeed,
   },
   {
     path: '/feed',
     name: 'yourFeed',
-    component: YourFeed
+    component: YourFeed,
   },
   {
     path: '/tags/:slug',
     name: 'tag',
-    component: TagFeed
+    component: TagFeed,
   },
   {
     path: '/articles/new',
     name: 'createArticle',
-    component: CreateArticle
+    component: CreateArticle,
   },
   {
-    path: '/articles/:slug',
+    path: '/article/:slug',
     name: 'article',
-    component: Article
+    component: Article,
   },
   {
-    path: '/articles/:slug/edit',
+    path: '/article/:slug/edit',
     name: 'editArticle',
-    component: EditArticle
+    component: EditArticle,
   },
   {
     path: '/settings',
     name: 'settings',
-    component: Settings
+    component: Settings,
   },
   {
     path: '/profiles/:slug',
     name: 'userProfile',
-    component: UserProfile
+    component: UserProfile,
   },
   {
     path: '/profiles/:slug/favorites',
     name: 'userProfileFavorites',
-    component: UserProfile
-  }
+    component: UserProfile,
+  },
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
 })
 
 export default router

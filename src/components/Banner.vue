@@ -1,8 +1,8 @@
 <template>
   <div class="banner">
     <div class="container">
-      <h1>Medium clone</h1>
-      <p>A place to share knowledge</p>
+      <h2>Vue Medium Clone</h2>
+      <p>Mесто для обмена знаниями</p>
     </div>
   </div>
 </template>
@@ -12,3 +12,9 @@ export default {
   name: 'McvBanner'
 }
 </script>
+
+<style lang="scss">
+.banner{
+  text-align: center;
+}
+</style>

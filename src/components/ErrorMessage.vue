@@ -1,6 +1,6 @@
 <template>
-  <div>
-    {{ message }}
+  <div class="error-messages">
+    {{message}}
   </div>
 </template>
 
@@ -8,11 +8,17 @@
 export default {
   name: 'McvErrorMessage',
   props: {
-    message: {
+    message:{
       type: String,
       required: false,
-      default: 'Something went wrong'
+      default: 'Что-то пошло не так =`('
     }
   }
 }
 </script>
+
+<style lang="scss">
+.error-messages{
+  color: red;
+}
+</style>

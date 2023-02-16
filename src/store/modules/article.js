@@ -3,74 +3,73 @@ import articleApi from '@/api/article'
 const state = {
   data: null,
   isLoading: false,
-  error: null
+  error: null,
 }
 
-export const mutationTypes = {
-  getArticleStart: '[article] Get article start',
-  getArticleSuccess: '[article] Get article success',
-  getArticleFailure: '[article] Get article failure',
+export const mutationsTypes = {
+  getArticleStart: '[article] get Article Start',
+  getArticleSuccess: '[article] get Article Success',
+  getArticleFailure: '[article] get Article Failure',
 
-  deleteArticleStart: '[article] Delete article start',
-  deleteArticleSuccess: '[article] Delete article success',
-  deleteArticleFailure: '[article] Delete article failure'
+  deleteArticleStart: '[article] delete Article Start',
+  deleteArticleSuccess: '[article] delete Article Success',
+  deleteArticleFailure: '[article] delete Article Failure',
 }
 
-export const actionTypes = {
-  getArticle: '[article] Get article',
-  deleteArticle: '[article] Delete article'
+export const actionsTypes = {
+  getArticle: '[article] get Article',
+  deleteArticle: '[article] delete Article',
 }
 
 const mutations = {
-  [mutationTypes.getArticleStart](state) {
-    state.isLoading = true
-    state.data = null
+  [mutationsTypes.getArticleStart](state) {
+    (state.isLoading = true), (state.data = null)
   },
-  [mutationTypes.getArticleSuccess](state, payload) {
+  [mutationsTypes.getArticleSuccess](state, payload) {
+    (state.isLoading = false), (state.data = payload)
+  },
+  [mutationsTypes.getArticleFailure](state, payload) {
     state.isLoading = false
-    state.data = payload
+    state.error = payload
   },
-  [mutationTypes.getArticleFailure](state) {
-    state.isLoading = false
-  },
-  [mutationTypes.deleteArticleStart]() {},
-  [mutationTypes.deleteArticleSuccess]() {},
-  [mutationTypes.deleteArticleFailure]() {}
+  [mutationsTypes.deleteArticleStart](){},
+  [mutationsTypes.deleteArticleSuccess](){},
+  [mutationsTypes.deleteArticleFailure](){},
 }
 
 const actions = {
-  [actionTypes.getArticle](context, {slug}) {
+  [actionsTypes.getArticle]({ commit }, { slug }) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.getArticleStart)
+      commit(mutationsTypes.getArticleStart, slug)
       articleApi
         .getArticle(slug)
         .then(article => {
-          context.commit(mutationTypes.getArticleSuccess, article)
+          commit(mutationsTypes.getArticleSuccess, article)
           resolve(article)
         })
-        .catch(() => {
-          context.commit(mutationTypes.getArticleFailure)
+        .catch((article) => {
+          commit(mutationsTypes.getArticleFailure, article)
         })
     })
   },
-  [actionTypes.deleteArticle](context, {slug}) {
+  [actionsTypes.deleteArticle]({ commit }, { slug }) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.deleteArticleStart)
+      commit(mutationsTypes.deleteArticleStart, slug)
       articleApi
         .deleteArticle(slug)
         .then(() => {
-          context.commit(mutationTypes.deleteArticleSuccess)
+          commit(mutationsTypes.deleteArticleSuccess)
           resolve()
         })
         .catch(() => {
-          context.commit(mutationTypes.deleteArticleFailure)
+          commit(mutationsTypes.deleteArticleFailure)
         })
     })
-  }
+  },
 }
 
 export default {
   state,
+  mutations,
   actions,
-  mutations
 }

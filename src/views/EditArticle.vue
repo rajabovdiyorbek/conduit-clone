@@ -1,10 +1,10 @@
 <template>
   <div>
-    <mcv-loading v-if="isLoading" />
+    <McvLoading v-if="isLoading" />
     <mcv-article-form
-      v-if="initialValues"
-      :initialValues="initialValues"
-      :errors="validationErrors"
+      v-if="initialValue"
+      :initialValue="initialValue"
+      :errors="validationError"
       :isSubmitting="isSubmitting"
       @articleSubmit="onSubmit"
     >
@@ -13,51 +13,51 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-
-import McvArticleForm from '@/components/ArticleForm'
-import McvLoading from '@/components/Loading'
-import {actionTypes} from '@/store/modules/editArticle'
-
+import { mapState } from 'vuex'
+import { actionsTypes } from '@/store/modules/editArticle'
+import McvLoading from '@/components/Loading.vue'
+import McvArticleForm from '@/components/ArticleForm.vue'
 export default {
   name: 'McvEditArticle',
   components: {
     McvArticleForm,
-    McvLoading
+    McvLoading,
   },
   computed: {
     ...mapState({
-      isLoading: state => state.editArticle.isLoading,
-      article: state => state.editArticle.article,
-      isSubmitting: state => state.editArticle.isSubmitting,
-      validationErrors: state => state.editArticle.validationErrors
+      isSubmitting: (state) => state.editArticle.isSubmitting,
+      isLoading: (state) => state.editArticle.isLoading,
+      article: (state) => state.editArticle.article,
+      validationError: (state) => state.editArticle.validationErrors,
     }),
-    initialValues() {
+    initialValue() {
       if (!this.article) {
         return null
+      } else {
+        return {
+          title: this.article.title,
+          description: this.article.description,
+          body: this.article.body,
+          tagList: this.article.tagList,
+        }
       }
-      return {
-        title: this.article.title,
-        description: this.article.description,
-        body: this.article.body,
-        tagList: this.article.tagList
-      }
-    }
+    },
   },
   mounted() {
-    this.$store.dispatch(actionTypes.getArticle, {
-      slug: this.$route.params.slug
-    })
+    const slug = this.$route.params.slug
+    this.$store.dispatch(actionsTypes.getArticle, { slug })
   },
   methods: {
     onSubmit(articleInput) {
+      console.log('test onSubmit updateArticle');
       const slug = this.$route.params.slug
       this.$store
-        .dispatch(actionTypes.updateArticle, {articleInput, slug})
-        .then(article => {
-          this.$router.push({name: 'article', params: {slug: article.slug}})
+        .dispatch(actionsTypes.updateArticle, {articleInput, slug })
+        .then((article) => {
+          this.$router.push({ name: 'article', params: { slug: article.slug } })
+          console.log('then onSubmit');
         })
-    }
-  }
+    },
+  },
 }
 </script>

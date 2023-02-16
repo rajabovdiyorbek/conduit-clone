@@ -3,52 +3,51 @@ import userProfileApi from '@/api/userProfile'
 const state = {
   data: null,
   isLoading: false,
-  error: null
+  error: null,
 }
 
-export const mutationTypes = {
-  getUserProfileStart: '[userProfile] Get user profile start',
-  getUserProfileSuccess: '[userProfile] Get user profile success',
-  getUserProfileFailure: '[userProfile] Get user profile failure'
+export const mutationsTypes = {
+  getUserProfileStart: '[userProfile] get UserProfile Start',
+  getUserProfileSuccess: '[userProfile] get UserProfile Success',
+  getUserProfileFailure: '[userProfile] get UserProfile Failure',
 }
 
-export const actionTypes = {
-  getUserProfile: '[userProfile] Get user profile'
+export const actionsTypes = {
+  getUserProfile: '[userProfile] getUserProfile',
 }
 
 const mutations = {
-  [mutationTypes.getUserProfileStart](state) {
-    state.isLoading = true
-    state.data = null
+  [mutationsTypes.getUserProfileStart](state) {
+    (state.isLoading = true), (state.data = null)
   },
-  [mutationTypes.getUserProfileSuccess](state, payload) {
-    state.isLoading = false
-    state.data = payload
+  [mutationsTypes.getUserProfileSuccess](state, payload) {
+    (state.isLoading = false), (state.data = payload)
   },
-  [mutationTypes.getUserProfileFailure](state) {
+  [mutationsTypes.getUserProfileFailure](state) {
     state.isLoading = false
-  }
+  },
 }
 
 const actions = {
-  [actionTypes.getUserProfile](context, {slug}) {
+  [actionsTypes.getUserProfile]({ commit }, { slug }) {
+    console.log('test state')
     return new Promise(resolve => {
-      context.commit(mutationTypes.getUserProfileStart)
+      commit(mutationsTypes.getUserProfileStart)
       userProfileApi
         .getUserProfile(slug)
         .then(userProfile => {
-          context.commit(mutationTypes.getUserProfileSuccess, userProfile)
+          commit(mutationsTypes.getUserProfileSuccess, userProfile)
           resolve(userProfile)
         })
         .catch(() => {
-          context.commit(mutationTypes.getUserProfileFailure)
+          commit(mutationsTypes.getPopularTagsFailure)
         })
     })
-  }
+  },
 }
 
 export default {
   state,
+  mutations,
   actions,
-  mutations
 }

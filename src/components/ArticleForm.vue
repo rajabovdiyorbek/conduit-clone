@@ -2,38 +2,38 @@
   <div class="editor-page">
     <div class="container page">
       <div class="row">
-        <div class="col-md-10 offset-md-1 col-xs-12">
+        <div class="col-mad-10 offset-md-1 col-xs-12">
           <mcv-validation-errors v-if="errors" :validation-errors="errors" />
           <form @submit.prevent="onSubmit">
             <fieldset>
               <fieldset class="form-group">
                 <input
                   type="text"
-                  class="form-control form-control-lg"
-                  placeholder="Article title"
+                  class="form-control corm-control-lg"
+                  placeholder="Название статьи"
                   v-model="title"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <input
                   type="text"
-                  class="form-control form-control-lg"
-                  placeholder="Description"
+                  class="form-control corm-control-lg"
+                  placeholder="Описание "
                   v-model="description"
                 />
               </fieldset>
               <fieldset class="form-group">
                 <textarea
-                  class="form-control form-control-lg"
-                  placeholder="What is this article about?"
+                  class="form-control corm-control-lg"
+                  placeholder="O чем эта статья ?"
                   v-model="body"
                 ></textarea>
               </fieldset>
               <fieldset class="form-group">
                 <input
                   type="text"
-                  class="form-control form-control-lg"
-                  placeholder="Enter tags"
+                  class="form-control corm-control-lg"
+                  placeholder="Введите теги "
                   v-model="tagList"
                 />
               </fieldset>
@@ -43,7 +43,7 @@
                   class="btn btn-lg pull-xs-right btn-primary"
                   :disabled="isSubmitting"
                 >
-                  Publish Article
+                  Опубликовать Новость
                 </button>
               </fieldset>
             </fieldset>
@@ -55,32 +55,32 @@
 </template>
 
 <script>
-import McvValidationErrors from '@/components/ValidationErrors'
+import McvValidationErrors from '@/components/ValidationErrors.vue'
 export default {
   name: 'McvArticleForm',
+  components: {
+    McvValidationErrors,
+  },
   props: {
-    initialValues: {
+    initialValue: {
       type: Object,
-      required: true
+      required: true,
     },
     errors: {
       type: Object,
-      required: false
+      required: false,
     },
     isSubmitting: {
       type: Boolean,
-      required: true
-    }
-  },
-  components: {
-    McvValidationErrors
+      required: true,
+    },
   },
   data() {
     return {
-      title: this.initialValues.title,
-      description: this.initialValues.description,
-      body: this.initialValues.body,
-      tagList: this.initialValues.tagList.join(' ')
+      title: this.initialValue.title,
+      description: this.initialValue.description,
+      body: this.initialValue.body,
+      tagList: this.initialValue.tagList.join(' ')
     }
   },
   methods: {
@@ -96,3 +96,4 @@ export default {
   }
 }
 </script>
+

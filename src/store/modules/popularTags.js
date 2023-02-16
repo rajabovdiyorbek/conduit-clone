@@ -1,47 +1,48 @@
+
 import popularTagsApi from '@/api/popularTags'
 
 const state = {
   data: null,
   isLoading: false,
-  error: null
+  error: null,
 }
 
-export const mutationTypes = {
-  getPopularTagsStart: '[popularTags] Get popular tags start',
-  getPopularTagsSuccess: '[popularTags] Get popular tags success',
-  getPopularTagsFailure: '[popularTags] Get popular tags failure'
+export const mutationsTypes = {
+  getPopularTagsStart: '[PopularTags] getPopularTagsStart',
+  getPopularTagsSuccess: '[PopularTags] getPopularTagsSuccess',
+  getPopularTagsFailure: '[PopularTags] getPopularTagsFailure',
 }
 
-export const actionTypes = {
-  getPopularTags: '[popularTags] Get popular tags'
+export const actionsTypes = {
+  getPopularTags: '[PopularTags] Get Popular Tags',
 }
 
 const mutations = {
-  [mutationTypes.getPopularTagsStart](state) {
-    state.isLoading = true
+  [mutationsTypes.getPopularTagsStart](state) {
+    state.isLoading = true,
     state.data = null
   },
-  [mutationTypes.getPopularTagsSuccess](state, payload) {
-    state.isLoading = false
+  [mutationsTypes.getPopularTagsSuccess](state, payload) {
+    state.isLoading = false,
     state.data = payload
   },
-  [mutationTypes.getPopularTagsFailure](state) {
+  [mutationsTypes.getPopularTagsFailure](state) {
     state.isLoading = false
-  }
+  },
 }
 
 const actions = {
-  [actionTypes.getPopularTags](context) {
+  [actionsTypes.getPopularTags]({ commit }) {
     return new Promise(resolve => {
-      context.commit(mutationTypes.getPopularTagsStart)
+      commit(mutationsTypes.getPopularTagsStart)
       popularTagsApi
         .getPopularTags()
         .then(tags => {
-          context.commit(mutationTypes.getPopularTagsSuccess, tags)
+          commit(mutationsTypes.getPopularTagsSuccess, tags)
           resolve(tags)
         })
         .catch(() => {
-          context.commit(mutationTypes.getPopularTagsFailure)
+          commit(mutationsTypes.getPopularTagsFailure)
         })
     })
   }
@@ -49,6 +50,6 @@ const actions = {
 
 export default {
   state,
+  mutations,
   actions,
-  mutations
 }

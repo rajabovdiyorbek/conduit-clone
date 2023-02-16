@@ -1,8 +1,8 @@
-import {mutationTypes as authMutationTypes} from '@/store/modules/auth'
+import { mutationsTypes as authMutationTypes } from '@/store/modules/auth'
 
 const state = {
   isSubmitting: false,
-  validationErrors: null
+  validationErrors: null,
 }
 
 const mutations = {
@@ -10,10 +10,10 @@ const mutations = {
     state.isSubmitting = true
     state.validationErrors = null
   },
-  [authMutationTypes.updateCurrentUserSuccess](state) {
+  [authMutationTypes.updateCurrentUserSuccess](state){
     state.isSubmitting = false
   },
-  [authMutationTypes.updateCurrentUserFailure](state, payload) {
+  [authMutationTypes.updateCurrentUserFailure](state, payload){
     state.isSubmitting = false
     state.validationErrors = payload
   }
@@ -21,5 +21,5 @@ const mutations = {
 
 export default {
   state,
-  mutations
+  mutations,
 }

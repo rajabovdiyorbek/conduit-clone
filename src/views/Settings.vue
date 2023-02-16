@@ -3,54 +3,52 @@
     <div class="container page">
       <div class="row">
         <div class="col-md-6 offset-md-3 col-xs-12">
-          <h1 class="text-xs-center">Settings</h1>
+          <h2 class="text-xs-center">Hастройки</h2>
           <mcv-validation-errors
             v-if="validationErrors"
-            :validation-errors="validationErrors"
-          />
-          <form @submit.prevent="onSubmit">
+            :validationErrors="validationErrors"
+          >
+          </mcv-validation-errors>
+          <form @submit.prevent="onsubmit">
             <fieldset>
-              <fieldset class="form-group">
+              <fieldset class="from-group">
                 <input
                   type="text"
                   class="form-control form-control-lg"
                   v-model="form.image"
-                  placeholder="URL of profile image"
+                  placeholder="Вставте URL адрес картинки"
                 />
               </fieldset>
-
-              <fieldset class="form-group">
+              <fieldset class="from-group">
                 <input
                   type="text"
                   class="form-control form-control-lg"
                   v-model="form.username"
-                  placeholder="Username"
+                  placeholder="Имя пользователя"
                 />
               </fieldset>
-
-              <fieldset class="form-group">
+              <fieldset class="from-group">
                 <textarea
+                  type="text"
                   class="form-control form-control-lg"
                   v-model="form.bio"
-                  placeholder="Short bio about you"
+                  placeholder="Короткое описание *Обо мне*"
                 ></textarea>
               </fieldset>
-
-              <fieldset class="form-group">
+              <fieldset class="from-group">
                 <input
                   type="text"
                   class="form-control form-control-lg"
                   v-model="form.email"
-                  placeholder="Email"
+                  placeholder="Email пользователя"
                 />
               </fieldset>
-
-              <fieldset class="form-group">
+              <fieldset class="from-group">
                 <input
                   type="password"
                   class="form-control form-control-lg"
                   v-model="form.password"
-                  placeholder="New password"
+                  placeholder="Password пользователя"
                 />
               </fieldset>
               <button
@@ -58,13 +56,13 @@
                 class="btn btn-lg btn-primary pull-xs-right"
                 :disabled="isSubmitting"
               >
-                Update settings
+                Oбновить настройки
               </button>
             </fieldset>
           </form>
           <hr />
-          <button class="btn btn-outline-danger" @click="logout" type="text">
-            Or cick here to logout
+          <button class="btn btn-outline-danger" @click="logout">
+            Выйти из аккаунта
           </button>
         </div>
       </div>
@@ -73,25 +71,26 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex'
-import {
-  getterTypes as authGetterTypes,
-  actionTypes as authActionTypes
-} from '@/store/modules/auth'
 import McvValidationErrors from '@/components/ValidationErrors'
+
+import { mapState, mapGetters } from 'vuex'
+import {
+  gettersTypes as authGettersTypes,
+  actionsTypes as authActionsTypes,
+} from '@/store/modules/auth'
 
 export default {
   name: 'McvSettings',
   components: {
-    McvValidationErrors
+    McvValidationErrors,
   },
   computed: {
     ...mapState({
-      isSubmitting: state => state.settings.isSubmitting,
-      validationErrors: state => state.settings.validationErrors
+      isSubmitting: (state) => state.settings.isSubmitting,
+      validationErrors: (state) => state.settings.validationErrors,
     }),
     ...mapGetters({
-      currentUser: authGetterTypes.currentUser
+      currentUser: authGettersTypes.currentUser,
     }),
     form() {
       if (this.currentUser) {
@@ -100,30 +99,39 @@ export default {
           bio: this.currentUser.bio,
           image: this.currentUser.image,
           email: this.currentUser.email,
-          password: ''
+          password: '',
+        }
+      } else {
+        return {
+          username: '',
+          bio: '',
+          image: '',
+          email: '',
+          password: '',
         }
       }
-
-      return {
-        username: '',
-        bio: '',
-        image: '',
-        email: '',
-        password: ''
-      }
-    }
+    },
   },
+
   methods: {
-    onSubmit() {
-      this.$store.dispatch(authActionTypes.updateCurrentUser, {
-        currentUserInput: this.form
+    onsubmit() {
+      console.log('onsubmit onsubmit settings', this.form)
+      this.$store.dispatch(authActionsTypes.updateCurrentUser, {
+        currentUserInput: this.form,
       })
     },
     logout() {
-      this.$store.dispatch(authActionTypes.logout).then(() => {
-        this.$router.push({name: 'globalFeed'})
+      this.$store.dispatch(authActionsTypes.logout)
+      .then(() => {
+        this.$router.push({ name: 'globalFeed' })
       })
-    }
-  }
+    },
+  },
 }
 </script>
+
+<style lang="scss">
+fieldset {
+  margin: 10px 0;
+}
+</style>
