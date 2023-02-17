@@ -1,6 +1,6 @@
 import axios from '@/api/axios' //* импортируем корневой axios 
 
-const getArticle = slug => { // * функция getArticle получает на вход slug для создание полного адреса get запроса 
+const getArticle = slug => { 
   return axios.get(`/articles/${slug}`).then(response => response.data.article)
 }
 
