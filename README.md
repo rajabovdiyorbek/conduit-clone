@@ -1,5 +1,5 @@
 # mediumclone_vue
- Hello
+ Hello everyone
 ## Project setup
 ```
 yarn install
