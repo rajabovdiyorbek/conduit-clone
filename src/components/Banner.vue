@@ -2,7 +2,7 @@
   <div class="banner">
     <div class="container">
       <h2>Vue Medium Clone</h2>
-      <p>Mесто для обмена знаниями</p>
+      <p>Mесто dsad для обмена знаниями</p>
     </div>
   </div>
 </template>
